@@ -1,0 +1,13 @@
+[Unit]
+Description=Calibre Web Daemon
+Documentation=https://github.com/janeczku/calibre-web
+After=prepare-config.service
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/python2.7 /opt/calibre-web-0.6.4/cps.py
+WorkingDirectory=/opt/calibre-web-0.6.4
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
