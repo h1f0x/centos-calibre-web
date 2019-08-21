@@ -62,6 +62,7 @@ RUN wget https://github.com/janeczku/calibre-web/archive/0.6.4.zip
 RUN unzip 0.6.4.zip
 WORKDIR /opt/calibre-web-0.6.4
 RUN pip2.7 install --target vendor -r requirements.txt
+RUN pip2.7 install --target vendor -r optional-requirements.txt
 
 # Upgrade pip and add apprise
 RUN pip2.7 install --upgrade pip
@@ -77,13 +78,6 @@ RUN (crontab -l 2>/dev/null; echo "* * * * * /usr/bin/verify-services.sh") | cro
 #configure services (systemd)
 RUN systemctl enable prepare-config.service
 RUN systemctl enable calibre-web.service
-
-# Clean Up
-RUN yum groupremove -y "development tools"
-RUN yum remove -y zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel expat-devel
-
-# Install git
-RUN yum install -y git
 
 VOLUME /config /books
 
