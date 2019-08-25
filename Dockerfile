@@ -77,7 +77,7 @@ COPY rootfs/ /
 # crontab
 RUN yum install -y cronie
 RUN (crontab -l 2>/dev/null; echo "* * * * * /usr/bin/verify-services.sh") | crontab -
-RUN (crontab -l 2>/dev/null; echo "* * * * * /usr/bin/add-new-books.sh") | crontab -
+RUN (crontab -l 2>/dev/null; echo "* * * * * /bin/bash /usr/bin/add-new-books.sh 1> /config/calibre/auto_import_log.txt 2> /config/calibre/auto_import_error.txt") | crontab -
 
 #configure services (systemd)
 RUN systemctl enable prepare-config.service

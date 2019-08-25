@@ -48,8 +48,8 @@
       set_fact:
         pg_volumes:
           - '/opt/appdata/{{pgrole}}:/config'
-          - '/mnt/unionfs/calibre-web:/books'
-          - '/mnt/downloads/calibre-web:/auto_add'
+          - '/mnt/unionfs/calibre-web-db:/books'
+          - '/mnt/incomplete/{{pgrole}}:/auto_add'
           - '/etc/localtime:/etc/localtime:ro'
 
     - name: 'Setting PG ENV'
