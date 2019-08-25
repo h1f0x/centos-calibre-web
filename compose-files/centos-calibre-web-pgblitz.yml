@@ -45,10 +45,8 @@
       set_fact:
         pg_volumes:
           - '/opt/appdata/{{pgrole}}:/config'
-          - '/mnt/unionfs/calibre:/config/calibre'
+          - '/mnt/unionfs/calibre:/books'
           - '/etc/localtime:/etc/localtime:ro'
-          - '/mnt:/mnt'
-          - '{{path.stdout}}:{{path.stdout}}'
 
     - name: 'Setting PG ENV'
       set_fact:

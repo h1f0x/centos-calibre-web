@@ -7,7 +7,7 @@ ENV container docker
 ENV CALIBRE_INSTALLER_SOURCE_CODE_URL https://raw.githubusercontent.com/kovidgoyal/calibre/master/setup/linux-installer.py
 ENV CALIBRE_CONFIG_DIRECTORY="/config/calibre/"
 ENV CALIBRE_TEMP_DIR="/config/calibre/tmp/"
-ENV CALIBRE_CACHE_DIRECTORY="/config/cache/calibre/"
+ENV CALIBRE_CACHE_DIRECTORY="/config/calibre/cache/"
 
 RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == \
 systemd-tmpfiles-setup.service ] || rm -f $i; done); \
@@ -52,6 +52,9 @@ RUN ls -la
 RUN make -C unrar lib
 RUN make -C unrar install-lib
 RUN pip2.7 install --global-option=build_ext --global-option="-I$(pwd)" unrardll
+WORKDIR /tmp/unrar
+RUN make unrar
+RUN cp -v unrar /usr/local/bin/
 
 # Calibre
 RUN wget -O- ${CALIBRE_INSTALLER_SOURCE_CODE_URL} | python2.7 -c "import sys; main=lambda:sys.stderr.write('Download failed\n'); exec(sys.stdin.read()); main(install_dir='/opt', isolated=True)"
@@ -74,6 +77,7 @@ COPY rootfs/ /
 # crontab
 RUN yum install -y cronie
 RUN (crontab -l 2>/dev/null; echo "* * * * * /usr/bin/verify-services.sh") | crontab -
+RUN (crontab -l 2>/dev/null; echo "* * * * * /usr/bin/add-new-books.sh") | crontab -
 
 #configure services (systemd)
 RUN systemctl enable prepare-config.service

@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
 
+CALIBRE_CONFIG_DIRECTORY="/config/calibre/"
+CALIBRE_TEMP_DIR="/config/calibre/tmp/"
+CALIBRE_CACHE_DIRECTORY="/config/calibre/"
+
 mkdir -p /config/calibre-web
 mkdir -p /config/calibre-web/logs
 mkdir -p /config/calibre
 mkdir -p /config/calibre/tmp
-mkdir -p /config/cache/calibre/
+mkdir -p /config/calibre/cache
 
 if [ ! -f /config/calibre-web/app.db ]; then
     cp -r /defaults/calibre-web/* /config/calibre-web/
