@@ -83,7 +83,7 @@ RUN (crontab -l 2>/dev/null; echo "* * * * * /usr/bin/add-new-books.sh") | cront
 RUN systemctl enable prepare-config.service
 RUN systemctl enable calibre-web.service
 
-VOLUME /config /books
+VOLUME /config /books /auto_add
 
 # End
 CMD ["/usr/sbin/init"]

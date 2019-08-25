@@ -21,6 +21,9 @@
     - name: 'Including cron job'
       include_tasks: '/opt/coreapps/apps/_core.yml'
 
+    - name: 'Including folders'
+      include_tasks: '/opt/communityapps/apps/_downloaders.yml'
+
     # LABELS ######################################################################
     - name: 'Adding Traefik'
       set_fact:
@@ -45,7 +48,8 @@
       set_fact:
         pg_volumes:
           - '/opt/appdata/{{pgrole}}:/config'
-          - '/mnt/unionfs/calibre:/books'
+          - '/mnt/unionfs/calibre-web:/books'
+          - '/mnt/downloads/calibre-web:/auto_add'
           - '/etc/localtime:/etc/localtime:ro'
 
     - name: 'Setting PG ENV'
