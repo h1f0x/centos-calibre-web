@@ -1,4 +1,4 @@
-FROM amd64/centos:latest
+FROM amd64/centos:7
 MAINTAINER h1f0x
 
 # Enabled systemd
@@ -61,14 +61,15 @@ RUN wget -O- ${CALIBRE_INSTALLER_SOURCE_CODE_URL} | python2.7 -c "import sys; ma
 
 # python3.6
 RUN yum install -y https://centos7.iuscommunity.org/ius-release.rpm
-RUN yum update
+RUN yum update -y
 RUN yum install -y python36u python36u-libs python36u-devel python36u-pip
 
 # calibre-web
 WORKDIR /opt
-RUN wget https://github.com/janeczku/calibre-web/archive/0.6.4.zip
-RUN unzip 0.6.4.zip
-WORKDIR /opt/calibre-web-0.6.4
+RUN yum install -y openldap-devel
+RUN wget https://github.com/janeczku/calibre-web/archive/0.6.7.zip
+RUN unzip 0.6.7.zip
+WORKDIR /opt/calibre-web-0.6.7
 RUN pip3.6 install --target vendor -r requirements.txt
 RUN pip3.6 install -r optional-requirements.txt
 RUN pip3.6 install hyper beautifulsoup4
